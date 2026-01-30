@@ -1,0 +1,961 @@
+/* ============================================================================
+   DESIGN SYSTEM & CSS VARIABLES
+   ============================================================================ */
+
+:root {
+    /* Color Palette - Dark Professional */
+    --bg-primary: #0f1419;           /* Very dark navy */
+    --bg-secondary: #1a1f2e;         /* Dark navy */
+    --bg-tertiary: #242d3d;          /* Lighter navy */
+    --bg-hover: #2d3748;             /* Hover state */
+    
+    --text-primary: #ffffff;         /* Pure white */
+    --text-secondary: #c1c7d0;       /* Light gray */
+    --text-tertiary: #8a8f99;        /* Medium gray */
+    
+    /* Semantic Colors - Vibrant underlines */
+    --current-state: #00d95f;        /* Vibrant green */
+    --next-steps: #ffd60a;           /* Vibrant yellow */
+    --strategy: #ff4757;             /* Vibrant red */
+    
+    --accent-primary: #00a8e8;       /* Bright cyan */
+    --accent-hover: #0096d1;         /* Darker cyan */
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Typography */
+    --font-display: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    
+    /* Border Radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================================================
+   GLOBAL STYLES
+   ============================================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-size: 20px;
+}
+
+#app {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* ============================================================================
+   SIDEBAR
+   ============================================================================ */
+
+.sidebar {
+    width: 240px;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--bg-tertiary);
+    padding: var(--spacing-lg) var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    box-shadow: var(--shadow-sm);
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.logo {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent-primary);
+    letter-spacing: -0.5px;
+}
+
+.participant-info {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--accent-primary);
+}
+
+.participant-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.participant-id {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-primary);
+    word-break: break-all;
+}
+
+.progress-indicator {
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--bg-tertiary);
+}
+
+.progress-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-md);
+}
+
+.progress-stages {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.stage {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    background: var(--bg-tertiary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+.stage.active {
+    background: var(--bg-hover);
+    opacity: 1;
+}
+
+.stage.completed {
+    opacity: 1;
+}
+
+.stage-number {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.stage.completed .stage-number {
+    background: var(--current-state);
+}
+
+.stage-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+/* ============================================================================
+   MAIN CONTENT AREA
+   ============================================================================ */
+
+.main-content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    background: var(--bg-primary);
+}
+
+/* ============================================================================
+   PAGE CONTAINER & TRANSITIONS
+   ============================================================================ */
+
+.page {
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: var(--spacing-xl);
+    animation: fadeIn 0.3s ease;
+}
+
+.page.active {
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================================================
+   WELCOME PAGE
+   ============================================================================ */
+
+.welcome-container {
+    margin: auto;
+    text-align: center;
+    max-width: 600px;
+    padding: var(--spacing-xl);
+}
+
+.welcome-container h1 {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+.welcome-container p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.8;
+}
+
+/* ============================================================================
+   STAGE HEADER
+   ============================================================================ */
+
+.stage-header {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--bg-tertiary);
+}
+
+.stage-header h2 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+}
+
+.stage-header p {
+    font-size: 20px;
+    color: var(--text-secondary);
+}
+
+/* ============================================================================
+   STAGE LAYOUTS (1, 2, 3)
+   ============================================================================ */
+
+.stage1-layout,
+.stage2-layout,
+.stage3-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: var(--spacing-lg);
+    height: calc(100vh - 200px);
+}
+
+/* ============================================================================
+   PANELS (CONTAINERS)
+   ============================================================================ */
+
+.panel {
+    background: var(--bg-secondary);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.3s ease;
+}
+
+.panel:hover {
+    border-color: var(--bg-hover);
+}
+
+.panel-header {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--bg-tertiary);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.panel-header h3 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.panel-content {
+    flex: 1;
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.scrollable {
+    overflow-y: auto;
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+    background: var(--bg-hover);
+}
+
+/* ============================================================================
+   CONTEXT SECTIONS (Problem & Solution)
+   ============================================================================ */
+
+.context-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.context-section h4 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.problem-text,
+.solution-text {
+    font-size: 20px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--accent-primary);
+}
+
+/* ============================================================================
+   FEEDBACK INPUT & TEXTAREA
+   ============================================================================ */
+
+.feedback-input,
+.chat-input {
+    width: 100%;
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--bg-hover);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    resize: vertical;
+    transition: all 0.3s ease;
+}
+
+.feedback-input:focus,
+.chat-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    background: var(--bg-tertiary);
+    box-shadow: 0 0 0 3px rgba(0, 168, 232, 0.1);
+}
+
+.feedback-input::placeholder,
+.chat-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+/* ============================================================================
+   CLASSIFICATIONS CONTAINER
+   ============================================================================ */
+
+/* 
+Not being used anymore, this is to render all classified sentences one by one in their own boxes
+Classification preview box styles are defined at the end of this file */   
+
+.classifications-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--bg-tertiary);
+}
+
+.classified-sentence {
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    border-left: 4px solid transparent;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.classified-sentence.current-state {
+    border-left-color: var(--current-state);
+    background: rgba(0, 217, 95, 0.05);
+}
+
+.classified-sentence.next-steps {
+    border-left-color: var(--next-steps);
+    background: rgba(255, 214, 10, 0.05);
+}
+
+.classified-sentence.strategy {
+    border-left-color: var(--strategy);
+    background: rgba(255, 71, 87, 0.05);
+}
+
+.classified-sentence.none {
+    border-left-color: var(--text-tertiary);
+    background: transparent;
+}
+
+/* ============================================================================
+   RUBRIC PANEL
+   ============================================================================ */
+
+.rubric-item {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--bg-tertiary);
+}
+
+.rubric-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.rubric-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.rubric-indicator.current-state {
+    background: var(--current-state);
+}
+
+.rubric-indicator.next-steps {
+    background: var(--next-steps);
+}
+
+.rubric-indicator.strategy {
+    background: var(--strategy);
+}
+
+.rubric-text strong {
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.rubric-text p {
+    font-size: 20px;
+    color: var(--text-tertiary);
+    line-height: 1.6;
+}
+
+/* ============================================================================
+   SUGGESTIONS CONTAINER (Stage 2)
+   ============================================================================ */
+
+.suggestions-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    overflow-y: auto;
+}
+
+.suggestion-box {
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    border-top: 3px solid var(--accent-primary);
+}
+
+.suggestion-box.micro {
+    border-top-color: var(--current-state);
+}
+
+.suggestion-box.coaching {
+    border-top-color: var(--strategy);
+}
+
+.suggestion-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.suggestion-content {
+    font-size: 20px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-md);
+}
+
+.suggestion-button {
+    display: none;
+}
+
+/* ============================================================================
+   STAGE 3 CHAT LAYOUT 
+   ============================================================================ */
+
+.chat-layout {
+    gap: 0;
+    padding: 0;
+    display: flex;           /* Added */
+    flex-direction: column;  /* Added */
+    height: 100%;            /* Added */
+    min-height: 0;           /* Added */
+}
+
+.chat-messages {
+    flex: 1;
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    border-bottom: 1px solid var(--bg-tertiary);
+    overflow-y: auto;        /* Added */
+    min-height: 0;  
+}
+
+.chat-message {
+    display: flex;
+    gap: var(--spacing-md);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chat-message.user {
+    justify-content: flex-end;
+}
+
+.chat-bubble {
+    max-width: 70%;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.chat-message.user .chat-bubble {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+}
+
+.chat-message.assistant .chat-bubble {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+.chat-input-area {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    flex-shrink: 0;
+}
+
+.chat-input {
+    height: 60px;
+}
+
+/* ============================================================================
+   STAGE 3 SELECTED SUGGESTION REFERENCE
+   ============================================================================ */
+
+/* ============================================================================
+   STAGE 3 MIDDLE COLUMN & REFERENCE
+   ============================================================================ */
+
+/* 1. New Wrapper for the Middle Column */
+.stage3-middle-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    height: 100%;
+    overflow: hidden; /* Prevents column from breaking grid height */
+}
+
+/* 2. Adjust the Feedback Panel to not hog all space */
+.stage3-middle-column .feedback-panel {
+    flex: 0 0 auto; /* Height determined by content */
+}
+
+/* 3. Make Reference Box fill the remaining space */
+.selected-suggestion-reference {
+    /* Remove old margins that caused gaps */
+    margin: 0;
+    padding: 0;
+    border: none;
+    
+    /* Flex magic to fill empty space */
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.suggestion-reference-box {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--bg-hover);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.3s ease;
+}
+
+.suggestion-reference-title {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--bg-hover);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0; /* Keep header visible */
+}
+
+.suggestion-reference-content {
+    padding: var(--spacing-lg);
+    font-size: 20px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    
+    /* NEW: Let it scroll inside the flex box */
+    flex: 1;
+    overflow-y: auto;
+    max-height: none; /* Remove the old 200px limit */
+}
+
+/* ============================================================================
+   BUTTONS
+   ============================================================================ */
+
+.btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+}
+
+.btn-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--bg-hover);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent-primary);
+}
+
+.btn-accent {
+    background: var(--strategy);
+    color: white;
+}
+
+.btn-accent:hover {
+    background: #e63547;
+}
+
+/* ============================================================================
+   STAGE FOOTER
+   ============================================================================ */
+
+.stage-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--bg-tertiary);
+}
+
+/* ============================================================================
+   COMPLETION PAGE
+   ============================================================================ */
+
+.completion-container {
+    margin: auto;
+    text-align: center;
+    max-width: 600px;
+    padding: var(--spacing-xl);
+}
+
+.completion-icon {
+    font-size: 72px;
+    margin-bottom: var(--spacing-lg);
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.completion-container h1 {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+.completion-container p {
+    font-size: 20px;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.8;
+}
+
+.completion-id {
+    font-size: 20px;
+    padding: var(--spacing-md);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-lg) 0;
+    border-left: 4px solid var(--current-state);
+}
+
+.completion-id strong {
+    color: var(--accent-primary);
+    font-family: 'Courier New', monospace;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 1400px) {
+    .stage1-layout,
+    .stage2-layout,
+    .stage3-layout {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+        height: auto;
+    }
+
+    .sidebar {
+        width: 200px;
+        padding: var(--spacing-md);
+    }
+
+    .sidebar-content {
+        gap: var(--spacing-lg);
+    }
+}
+
+@media (max-width: 768px) {
+    #app {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding: var(--spacing-md);
+        flex-direction: row;
+    }
+
+    .sidebar-content {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+    }
+
+    .progress-indicator {
+        border-left: 1px solid var(--bg-tertiary);
+        padding-left: var(--spacing-lg);
+        border-top: none;
+    }
+
+    .main-content {
+        flex-direction: column;
+    }
+
+    .page {
+        padding: var(--spacing-md);
+    }
+}
+
+/* ============================================================================
+   CLASSIFICATION PREVIEW BOX STYLES
+   ============================================================================ */
+
+.classifications-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--bg-tertiary);
+}
+
+.classification-preview-box {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--bg-hover);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    animation: fadeIn 0.3s ease;
+}
+
+.preview-header {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--bg-hover);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.preview-content {
+    padding: var(--spacing-lg);
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    font-family: var(--font-body);
+}
+
+/* Colored underlines for classified sentences */
+.classified-span {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 4px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.classified-span.current-state {
+    text-decoration-color: var(--current-state);
+}
+
+.classified-span.next-steps {
+    text-decoration-color: var(--next-steps);
+}
+
+.classified-span.strategy {
+    text-decoration-color: var(--strategy);
+}
+
+/* Hover effect for classified spans */
+.classified-span:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    padding: 0 2px;
+}

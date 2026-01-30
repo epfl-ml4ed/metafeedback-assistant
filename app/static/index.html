@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedagogical Feedback Assistant</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="logo">
+                    <span>Feedback Assistant</span>
+                </div>
+                
+                <div class="participant-info">
+                    <div class="participant-label">Participant ID</div>
+                    <div class="participant-id" id="participantID">Loading...</div>
+                </div>
+
+                <div class="progress-indicator">
+                    <div class="progress-label">Progress</div>
+                    <div class="progress-stages">
+                        <div class="stage" data-stage="1">
+                            <div class="stage-number">1</div>
+                            <div class="stage-name">Classify</div>
+                        </div>
+                        <div class="stage" data-stage="2">
+                            <div class="stage-number">2</div>
+                            <div class="stage-name">Refine</div>
+                        </div>
+                        <div class="stage" data-stage="3">
+                            <div class="stage-number">3</div>
+                            <div class="stage-name">Chat</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page: Welcome/Loading -->
+            <div id="page-welcome" class="page active">
+                <div class="welcome-container">
+                    <h1>Welcome to the Pedagogical Feedback Assistant</h1>
+                    <p>This study helps us understand how AI-assisted feedback can improve teaching practices.</p>
+                    <p>You'll provide feedback on student work across three stages, with guidance at each step.</p>
+                    <button class="btn btn-primary" onclick="goToStage(1)">Begin Study</button>
+                </div>
+            </div>
+
+            <!-- Page: Stage 1 - Classification -->
+            <div id="page-stage1" class="page">
+                <div class="stage-header">
+                    <h2>Stage 1: Analyze Your Feedback</h2>
+                    <p>Write feedback and see how it's classified according to pedagogical rubrics.</p>
+                </div>
+
+                <div class="stage1-layout">
+                    <!-- Left: Problem & Solution (scrollable) -->
+                    <div class="panel context-panel">
+                        <div class="panel-header">
+                            <h3>Problem & Student Solution</h3>
+                        </div>
+                        <div class="panel-content scrollable">
+                            <div class="context-section">
+                                <h4>Problem</h4>
+                                <div id="stage1-problem" class="problem-text"></div>
+                            </div>
+                            <div class="context-section">
+                                <h4>Student Solution</h4>
+                                <div id="stage1-solution" class="solution-text"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Middle: Feedback Input & Classification -->
+                    <div class="panel feedback-panel">
+                        <div class="panel-header">
+                            <h3>Your Feedback</h3>
+                        </div>
+                        <div class="panel-content">
+                            <textarea 
+                                id="stage1-feedback" 
+                                class="feedback-input" 
+                                placeholder="Write your feedback to the student here. Click 'Analyze' to see how it's classified."
+                            ></textarea>
+                            <button class="btn btn-secondary" onclick="stage1Analyze()">Analyze</button>
+                        </div>
+
+                        <div id="stage1-classifications" class="classifications-container">
+                            <!-- Rendered classifications appear here -->
+                        </div>
+
+                        <div class="stage-footer">
+                            <button class="btn btn-primary" onclick="goToStage(2)">Next Stage →</button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Rubric Legend -->
+                    <div class="panel rubric-panel">
+                        <div class="panel-header">
+                            <h3>Feedback Rubric</h3>
+                        </div>
+                        <div class="panel-content scrollable">
+                            <div class="rubric-item">
+                                <div class="rubric-indicator current-state"></div>
+                                <div class="rubric-text">
+                                    <strong>Current State</strong>
+                                    <p>Identifies what the student did correctly or incorrectly. Points out misconceptions, missing information, unclear reasoning, or irrelevant content.</p>
+                                </div>
+                            </div>
+
+                            <div class="rubric-item">
+                                <div class="rubric-indicator next-steps"></div>
+                                <div class="rubric-text">
+                                    <strong>Next Steps</strong>
+                                    <p>Advises students on how to improve their current work. Suggests concrete, task-specific actions.</p>
+                                </div>
+                            </div>
+
+                            <div class="rubric-item">
+                                <div class="rubric-indicator strategy"></div>
+                                <div class="rubric-text">
+                                    <strong>Strategy</strong>
+                                    <p>Helps students develop better approaches for solving similar tasks in the future. Encourages metacognitive awareness.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page: Stage 2 - Refinement with LLM Suggestions -->
+            <div id="page-stage2" class="page">
+                <div class="stage-header">
+                    <h2>Stage 2: Refine Your Feedback</h2>
+                    <p>Receive targeted suggestions in two different coaching styles. Refine your feedback and choose your preferred approach.</p>
+                </div>
+
+                <div class="stage2-layout">
+                    <!-- Left: Problem & Solution -->
+                    <div class="panel context-panel">
+                        <div class="panel-header">
+                            <h3>Problem & Student Solution</h3>
+                        </div>
+                        <div class="panel-content scrollable">
+                            <div class="context-section">
+                                <h4>Problem</h4>
+                                <div id="stage2-problem" class="problem-text"></div>
+                            </div>
+                            <div class="context-section">
+                                <h4>Student Solution</h4>
+                                <div id="stage2-solution" class="solution-text"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Middle: Feedback Input -->
+                    <div class="panel feedback-panel">
+                        <div class="panel-header">
+                            <h3>Your Feedback</h3>
+                        </div>
+                        <div class="panel-content">
+                            <textarea 
+                                id="stage2-feedback" 
+                                class="feedback-input" 
+                                placeholder="Modify your feedback here and click 'Get Suggestions' to receive coaching."
+                            ></textarea>
+                            <button class="btn btn-secondary" onclick="stage2Analyze()">Get Suggestions</button>
+                        </div>
+                    </div>
+
+                    <!-- Right: LLM Suggestions Side-by-Side -->
+                    <div class="panel suggestions-panel">
+                        <div class="panel-header">
+                            <h3>Coaching Suggestions</h3>
+                        </div>
+                        <div id="stage2-suggestions" class="suggestions-container">
+                            <!-- Micro & Coaching suggestions rendered here -->
+                        </div>
+
+                        <div class="stage-footer">
+                            <button class="btn btn-primary" onclick="goToStage(3)">Next Stage →</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page: Stage 3 - Chat Refinement -->
+            <div id="page-stage3" class="page">
+                <div class="stage-header">
+                    <h2>Stage 3: Chat & Finalize</h2>
+                    <p>Have a conversation with the assistant to further refine your feedback.</p>
+                </div>
+
+            <div class="stage3-layout">
+                <div class="panel context-panel">
+                    <div class="panel-header">
+                        <h3>Problem & Student Solution</h3>
+                    </div>
+                    <div class="panel-content scrollable">
+                        <div class="context-section">
+                            <h4>Problem</h4>
+                            <div id="stage3-problem" class="problem-text"></div>
+                        </div>
+                        <div class="context-section">
+                            <h4>Student Solution</h4>
+                            <div id="stage3-solution" class="solution-text"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stage3-middle-column">
+                    <div class="panel feedback-panel">
+                        <div class="panel-header">
+                            <h3>Your Feedback</h3>
+                        </div>
+                        <div class="panel-content">
+                            <textarea 
+                                id="stage3-feedback" 
+                                class="feedback-input" 
+                                placeholder="Modify your feedback as needed. Changes are automatically sent to the chat."
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div id="stage3-selected-suggestion" class="selected-suggestion-reference" style="display: none;">
+                        <div class="suggestion-reference-box">
+                            <div class="suggestion-reference-title" id="suggestion-title"></div>
+                            <div class="suggestion-reference-content scrollable" id="suggestion-content"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel chat-panel">
+                    <div class="panel-header">
+                        <h3>Refinement Chat</h3>
+                    </div>
+                    <div class="panel-content chat-layout">
+                        <div id="stage3-chat-messages" class="chat-messages scrollable"></div>
+                        <div class="chat-input-area">
+                            <textarea 
+                                id="stage3-chat-input" 
+                                class="chat-input" 
+                                placeholder="Ask the assistant for help refining your feedback..."
+                            ></textarea>
+                            <button class="btn btn-secondary" onclick="stage3SendMessage()">Send</button>
+                        </div>
+                    </div>
+
+                    <div class="stage-footer">
+                        <button class="btn btn-accent" onclick="stage3EndChat()">End Chat & Submit</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page: Completion -->
+            <div id="page-completion" class="page">
+                <div class="completion-container">
+                    <div class="completion-icon">✓</div>
+                    <h1>Thank You!</h1>
+                    <p>Your feedback analysis has been recorded.</p>
+                    <p class="completion-id">Participant ID: <strong id="completion-participant-id"></strong></p>
+                    <p>Your contributions will help improve pedagogical feedback practices.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
