@@ -1,4 +1,4 @@
-# Pedagogical Feedback Assistant 
+# MetaFeedback Assistant: Pedagogical Feedback Assistant 
 
 AI-assisted feedback coaching for TAs. This web-application guides users through three stages of feedback refinement, with AI-powered classification and suggestions.
 Three stages:
@@ -222,6 +222,43 @@ Log any event to the activity log.
   "timestamp": "2025-02-10T14:30:00Z"
 }
 ```
+
+## Model Training roducibility
+
+All data preprocessing and training scripts are located in the `train/` folder.  
+Trained model weights are not included in this repository due to size constraints; this section documents exactly how the classifiers were obtained.
+
+### Training scripts
+
+The training pipeline consists of three main scripts:
+
+1. **`preprocess_data.py`**  
+   - Cleans and deduplicates the annotated feedback dataset  
+   - Merges *Specific Strategy* and *General Learning Strategy* into a single **Strategy** label  
+   - Produces three binary datasets (one per rubric) with course metadata for cross-course evaluation  
+
+2. **`trainer_unified_bert.py`**  
+   - Fine-tunes transformer models using weighted cross-entropy loss  
+   - Performs grid search over learning rate, batch size, and number of epochs  
+   - Uses cross-course splitting (ADA + ICC2 held out as test set)  
+   - Saves trained checkpoints and evaluation artifacts  
+
+3. **`train_unified.sh`**  
+   - SLURM job script used to launch training on the EPFL GPU cluster  
+   - Handles environment setup and dependency configuration  
+
+### Final classifier configurations
+
+The following configurations were selected based on test-set F1 score and Cohen’s Kappa and are used in the system:
+
+| Rubric        | Base Model   | Learning Rate | Batch Size | Epochs |
+|--------------|--------------|---------------|------------|--------|
+| Current State | BERT-base    | 2e-5          | 32         | 3      |
+| Strategy      | ELECTRA-base | 2e-5          | 32         | 3      |
+| Next Steps    | ELECTRA-base | 3e-5          | 8          | 5      |
+
+Training these configurations with the scripts above reproduces the classifiers described in the project report.
+
 
 ## Future Enhancements
 
