@@ -89,13 +89,11 @@ Configure your API key in your environment
 python -m uvicorn app.main:app
 
 #  Open browser
-Application can be found at
-# http://localhost:8000/static/index.html
-```
+Application can be found at: http://localhost:8000/static/index.html
+
 
 ## File Structure
 
-```
 metafeedback-assistant
 metafeedback-assistant/
 ├── README.md # Project overview, setup instructions, and usage
@@ -121,8 +119,6 @@ metafeedback-assistant/
 │   ├── logger.py # Event and interaction logging utilities
 │   └── text.py # Text preprocessing helpers
 
-
-```
 
 ## Configuration
 
