@@ -94,30 +94,41 @@ Application can be found at: http://localhost:8000/static/index.html
 
 ## File Structure
 
-metafeedback-assistant
 metafeedback-assistant/
-├── README.md # Project overview, setup instructions, and usage
-├── requirements.txt # Python dependencies
+├── README.md                          # Project overview, setup instructions, and usage
+├── requirements.txt                   # Python dependencies
+│
 ├── app/
-│ ├── main.py # FastAPI application entry point
-│ ├── classifiers/
-│ │ ├── loader.py # Loads trained classifier models from disk
-│ │ └── predict.py # Runs inference and applies confidence thresholds
-│ ├── llm/ 
-│ │ ├── client.py # OpenAI / LLM client wrapper
-│ │ └── prompts.py # Prompt templates and rubric definitions
-│ ├── routers/
-│ │ └── router.py # Backend API endpoints for classification and chat
-│ ├── schemas/ 
-│ │ └── feedback.py # Pydantic schemas for feedback data
-│ ├── static/ 
-│ │ ├── app.js # Frontend application logic
-│ │ ├── context.json # Problem statement and student solution context
-│ │ ├── index.html # Main frontend HTML entry point
-│ │ └── styles.css # Styling and theme definitions
-│ └── utils/ 
-│   ├── logger.py # Event and interaction logging utilities
-│   └── text.py # Text preprocessing helpers
+│   ├── main.py                        # FastAPI application entry point
+│   │
+│   ├── classifiers/
+│   │   ├── loader.py                  # Loads trained classifier models from disk
+│   │   └── predict.py                 # Runs inference and applies confidence thresholds
+│   │
+│   ├── llm/
+│   │   ├── client.py                  # OpenAI / LLM client wrapper
+│   │   └── prompts.py                 # Prompt templates and rubric definitions
+│   │
+│   ├── routers/
+│   │   └── router.py                  # Backend API endpoints for classification and chat
+│   │
+│   ├── schemas/
+│   │   └── feedback.py                # Pydantic schemas for feedback data
+│   │
+│   ├── static/
+│   │   ├── index.html                 # Main frontend HTML entry point
+│   │   ├── app.js                     # Frontend application logic
+│   │   ├── styles.css                 # Styling and theme definitions
+│   │   └── context.json               # Problem statement and student solution context
+│   │
+│   └── utils/
+│       ├── logger.py                  # Event and interaction logging utilities
+│       └── text.py                    # Text preprocessing helpers
+│
+└── train/                             # Model training reproducibility
+    ├── preprocess_data.py             # Data cleaning and preprocessing
+    ├── trainer_unified_bert.py        # Fine-tuning transformer models
+    └── train_unified.sh               # SLURM job script for GPU training
 
 
 ## Configuration
