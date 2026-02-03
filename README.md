@@ -97,35 +97,29 @@ Application can be found at
 
 ```
 metafeedback-assistant
-|   README.md
-|   requirements.txt
-|
-+---app
-|   |   main.py
-|   |
-|   +---classifiers
-|   |   |   loader.py
-|   |   |   predict.py
-|   |
-|   +---llm
-|   |   |   client.py
-|   |   |   prompts.py
-|   |
-|   +---routers
-|   |   |   router.py
-|   |
-|   +---schemas
-|   |   |   feedback.py
-|   |
-|   +---static
-|   |   |   app.js
-|   |   |   context.json
-|   |   |   index.html
-|   |   |   styles.css
-|   |
-    +---utils
-        |   logger.py
-        |   text.py
+metafeedback-assistant/
+├── README.md # Project overview, setup instructions, and usage
+├── requirements.txt # Python dependencies
+├── app/
+│ ├── main.py # FastAPI application entry point
+│ ├── classifiers/
+│ │ ├── loader.py # Loads trained classifier models from disk
+│ │ └── predict.py # Runs inference and applies confidence thresholds
+│ ├── llm/ 
+│ │ ├── client.py # OpenAI / LLM client wrapper
+│ │ └── prompts.py # Prompt templates and rubric definitions
+│ ├── routers/
+│ │ └── router.py # Backend API endpoints for classification and chat
+│ ├── schemas/ 
+│ │ └── feedback.py # Pydantic schemas for feedback data
+│ ├── static/ 
+│ │ ├── app.js # Frontend application logic
+│ │ ├── context.json # Problem statement and student solution context
+│ │ ├── index.html # Main frontend HTML entry point
+│ │ └── styles.css # Styling and theme definitions
+│ └── utils/ 
+│   ├── logger.py # Event and interaction logging utilities
+│   └── text.py # Text preprocessing helpers
 
 
 ```
@@ -273,13 +267,13 @@ Backend Improvements
 - [ ] (Optional) Base LLM suggestions in pedagogical literature
 
 Frontend Improvements
-- [] Circular progress indicator while the system is waiting for the answers form the LLM/Classifiers
-- [] Change Stage 1 highlight colores for the three rubrics - red underline is misleading, change with other color
-- [] Stage 2, Micro and Coaching suggestions should be shown side by side to avoid any primacy effect
-- [] Stage 3, the chat should start with a suggestive message from the LLM of what types  of questions can be asked by the user
+- [ ] Circular progress indicator while the system is waiting for the answers form the LLM/Classifiers
+- [ ] Change Stage 1 highlight colores for the three rubrics - red underline is misleading, change with other color
+- [ ] Stage 2, Micro and Coaching suggestions should be shown side by side to avoid any primacy effect
+- [ ] Stage 3, the chat should start with a suggestive message from the LLM of what types  of questions can be asked by the user
 
 System Design Improvements
 
-- [] Modular Format - Classifier + Suggestions or Classifier + Chat 
+- [ ] Modular Format - Classifier + Suggestions or Classifier + Chat 
 
 ---
